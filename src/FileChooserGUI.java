@@ -34,6 +34,9 @@ public class FileChooserGUI implements ActionListener {
 	private JTextField inputText;
 	private JTextField numberInput;
 	private JTextArea summary;
+	private JRadioButton link;
+	private JRadioButton file;
+	JRadioButton dir;
 	
 	/**
 	 * Launch the application.
@@ -65,9 +68,9 @@ public class FileChooserGUI implements ActionListener {
 		titlePanel.add(Box.createHorizontalGlue());
 		
 		JPanel selectionPanel = new JPanel();
-		JRadioButton link = new JRadioButton("Search from link");
-		JRadioButton file = new JRadioButton("Search from file");
-		JRadioButton dir = new JRadioButton("Search from directory");
+		link = new JRadioButton("Search from link");
+		file = new JRadioButton("Search from file");
+		dir = new JRadioButton("Search from directory");
 		searchType = new ButtonGroup();
 		searchType.add(link);
 		searchType.add(file);
@@ -185,15 +188,25 @@ public class FileChooserGUI implements ActionListener {
 	    }
 	    
 	    if(e.getActionCommand().equals("summarize")) {
-	    	FileParser summarizer = new FileParser(inputText.getText(), Integer.parseInt(numberInput.getText()));
-	    	String output;
-			try {
-				output = summarizer.getKeywords();
-		    	summary.setText(output);
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+	    	String output = "The following keywords have been found:\n";
+	    	if(link.isSelected()) {
+	    		
+	    	} else if(file.isSelected()) {
+		    	FileParser summarizer = new FileParser(inputText.getText(), Integer.parseInt(numberInput.getText()));
+				try {
+					output += summarizer.getKeywords();
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					output = "Error: File not found";
+				}
+	    	} else if(dir.isSelected()) {
+	    		
+	    	} else {
+	    		output = "Please select a search type.";
+	    	}
+	    	summary.setText(output);
+
 	    }
 	}
 
@@ -203,7 +216,7 @@ public class FileChooserGUI implements ActionListener {
 	 */
 	private void initialize() {
 		frame = new JFrame("File Summary Tool");
-		frame.setBounds(150, 150, 750, 300);
+		frame.setBounds(150, 150, 825, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}

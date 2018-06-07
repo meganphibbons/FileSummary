@@ -32,7 +32,7 @@ public class FileParser {
 		getCounts();
 		fillQueue();
 		while(words.size() > numKeywords) {
-			System.out.println(words.poll().getContents());
+			words.poll().getContents();
 		}
 		ArrayList<String> tempList = new ArrayList<String>();
 		String wordList = "";
