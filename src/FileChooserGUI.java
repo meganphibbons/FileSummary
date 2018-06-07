@@ -117,6 +117,9 @@ public class FileChooserGUI implements ActionListener {
 		JPanel sumPanel = new JPanel();
 		sumPanel.setLayout(new BoxLayout(sumPanel, BoxLayout.X_AXIS));
 		JButton finalButton = new JButton("Summarize");
+	    finalButton.setMnemonic(KeyEvent.VK_D);
+	    finalButton.addActionListener(this);
+	    finalButton.setActionCommand("summarize");
 		sumPanel.add(Box.createHorizontalGlue());
 		sumPanel.add(finalButton);
 		sumPanel.add(Box.createHorizontalGlue());
@@ -178,6 +181,10 @@ public class FileChooserGUI implements ActionListener {
 	    		}
 	    		numberInput.setText(Integer.toString(num));
 	    	}
+	    }
+	    
+	    if(e.getActionCommand().equals("summarize")) {
+	    	FileParser summarizer = new FileParser(inputText.getText(), Integer.parseInt(numberInput.getText()));
 	    }
 	}
 
