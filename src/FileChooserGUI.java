@@ -8,16 +8,17 @@
  *
  */
 
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.io.File;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,12 +26,12 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
-public class FileChooserGUI {
+public class FileChooserGUI implements ActionListener {
 	private JFrame frame;
 	private ButtonGroup searchType;
 	private JTextField inputText;
+	private JTextField numberInput;
 	private JTextArea summary;
 	
 	/**
@@ -84,6 +85,9 @@ public class FileChooserGUI {
 		JPanel inputPanel = new JPanel();
 		inputText = new JTextField(20);
 		JButton fileExplorer = new JButton("Open File Explorer");
+	    fileExplorer.setMnemonic(KeyEvent.VK_D);
+	    fileExplorer.addActionListener(this);
+	    fileExplorer.setActionCommand("fileExplorer");
 		inputPanel.add(inputText);
 		inputPanel.add(fileExplorer);
 		
@@ -95,9 +99,17 @@ public class FileChooserGUI {
 		numPanel.add(Box.createHorizontalGlue());
 		
 		JPanel numberPanel = new JPanel();
-		JTextField numberInput = new JTextField(5);
+		numberInput = new JTextField(5);
+		numberInput.setText("0");
+		numberInput.setHorizontalAlignment(JTextField.CENTER);
 		JButton decreaseVal = new JButton("-");
+	    decreaseVal.setMnemonic(KeyEvent.VK_D);
+	    decreaseVal.addActionListener(this);
+	    decreaseVal.setActionCommand("decreaseVal");
 		JButton increaseVal = new JButton("+");
+	    increaseVal.setMnemonic(KeyEvent.VK_D);
+	    increaseVal.addActionListener(this);
+	    increaseVal.setActionCommand("increaseVal");
 		numberPanel.add(decreaseVal);
 		numberPanel.add(numberInput);
 		numberPanel.add(increaseVal);
@@ -134,7 +146,39 @@ public class FileChooserGUI {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		
+	    if(e.getActionCommand().equals("fileExplorer")){
+	    	JFileChooser chooser = new JFileChooser(); 
+	        chooser.setCurrentDirectory(new java.io.File("C:\\"));
+	        chooser.setDialogTitle("Please select a file.");
+	        chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+	        chooser.setAcceptAllFileFilterUsed(false);
+	        String fileName = "";
+	        if(chooser.showOpenDialog(chooser) == JFileChooser.APPROVE_OPTION){
+	        	File chosenFile = chooser.getSelectedFile();
+	        	fileName = chosenFile.getPath();
+	        }
+	        inputText.setText(fileName);
+	    }
+	    
+	    if(e.getActionCommand().equals("increaseVal")) {
+	    	String numString = numberInput.getText();
+	    	if(numString.matches("[0-9]*")) {
+	    		int num = Integer.parseInt(numString);
+	    		num++;
+	    		numberInput.setText(Integer.toString(num));
+	    	}
+	    }
+	    
+	    if(e.getActionCommand().equals("decreaseVal")) {
+	    	String numString = numberInput.getText();
+	    	if(numString.matches("[0-9]*")) {
+	    		int num = Integer.parseInt(numString);
+	    		if(num > 0) {
+	    			num--;
+	    		}
+	    		numberInput.setText(Integer.toString(num));
+	    	}
+	    }
 	}
 
 	
