@@ -66,7 +66,7 @@ public class FileParser {
 		wordComparator.thenComparing(Word::getLength);
 		wordComparator.thenComparing(Word::getContents);
 		words = new PriorityQueue<Word>(wordComparator);
-		File commonWordsFile = new File("C:\\Users\\a626131\\workspace\\FileSummary\\src\\commonWords.txt");
+		File commonWordsFile = new File("resources\\commonWords.txt");
 		String commonWords = "";
 		Scanner scan = new Scanner(commonWordsFile);
 		while(scan.hasNext()) {
