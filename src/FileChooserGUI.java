@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -185,6 +186,14 @@ public class FileChooserGUI implements ActionListener {
 	    
 	    if(e.getActionCommand().equals("summarize")) {
 	    	FileParser summarizer = new FileParser(inputText.getText(), Integer.parseInt(numberInput.getText()));
+	    	String output;
+			try {
+				output = summarizer.getKeywords();
+		    	summary.setText(output);
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 	    }
 	}
 
