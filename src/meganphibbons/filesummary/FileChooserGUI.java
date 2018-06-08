@@ -105,7 +105,7 @@ public class FileChooserGUI implements ActionListener {
 		
 		JPanel numberPanel = new JPanel();
 		numberInput = new JTextField(5);
-		numberInput.setText("0");
+		numberInput.setText("1");
 		numberInput.setHorizontalAlignment(JTextField.CENTER);
 		JButton decreaseVal = new JButton("-");
 	    decreaseVal.setMnemonic(KeyEvent.VK_D);
@@ -181,7 +181,7 @@ public class FileChooserGUI implements ActionListener {
 	    	String numString = numberInput.getText();
 	    	if(numString.matches("[0-9]*")) {
 	    		int num = Integer.parseInt(numString);
-	    		if(num > 0) {
+	    		if(num > 1) {
 	    			num--;
 	    		}
 	    		numberInput.setText(Integer.toString(num));
@@ -189,25 +189,29 @@ public class FileChooserGUI implements ActionListener {
 	    }
 	    
 	    if(e.getActionCommand().equals("summarize")) {
-	    	String output = "The following keywords have been found:\n";
-	    	if(link.isSelected()) {
-	    		
-	    	} else if(file.isSelected()) {
-		    	FileParser summarizer = new FileParser(inputText.getText(), Integer.parseInt(numberInput.getText()));
-				try {
-					output += summarizer.getKeywords();
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-					output = "Error: File not found";
-				}
-	    	} else if(dir.isSelected()) {
-	    		
+	    	String output = "Error:\n";
+	    	if(inputText.getText().equals("")) {
+	    		output += "Please input a location or link.\n";
 	    	} else {
-	    		output = "Please select a search type.";
+		    	if(link.isSelected()) {
+		    		
+		    	} else if(file.isSelected()) {
+			    	FileParser summarizer = new FileParser(inputText.getText(), Integer.parseInt(numberInput.getText()));
+					try {
+				    	output = "The following keywords have been found:\n";
+						output += summarizer.getKeywords();
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						output = "Error: File not found";
+					}
+		    	} else if(dir.isSelected()) {
+		    		
+		    	} else {
+		    		output += "Please select a search type.";
+		    	}
 	    	}
 	    	summary.setText(output);
-
 	    }
 	}
 
