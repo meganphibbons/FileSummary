@@ -1,4 +1,5 @@
-package meganphibbons.filesummary;
+package meganphibbons.filesummary.support;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -7,27 +8,12 @@ import java.util.PriorityQueue;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-/**
- * 
- * @author Megan Phibbons
- * Project: FileSummary
- * Class: FileParser
- * Created: 06/07/2018
- * Updated: 2018
- *
- */
-
-public class FileParser {
-	
-	private String filePath;
-	private int numKeywords;
-	private TreeMap<String, Integer> counts;
-	private PriorityQueue<Word> words;
-	
-	public FileParser(String fPath, int numKeys) {
-		filePath = fPath;
-		numKeywords = numKeys;
-	}
+public abstract class Parser {
+	protected String contents;
+	protected String location;
+	protected int numKeywords;
+	protected TreeMap<String, Integer> counts;
+	protected PriorityQueue<Word> words;
 	
 	public String getKeywords() throws FileNotFoundException {
 		getCounts();
@@ -45,23 +31,7 @@ public class FileParser {
 		}
 		return wordList;
 	}
-	
-	private void getCounts() throws FileNotFoundException {
-		counts = new TreeMap<String, Integer>();
-		File inputFile = new File(filePath);
-		Scanner scan = new Scanner(inputFile);
-		while(scan.hasNext()) {
-			String word = scan.next();
-			word = word.toLowerCase();
-			word = word.replaceAll("[.,!?;]", "");
-			if(!counts.containsKey(word)) {
-				counts.put(word, 0);
-			}
-			counts.put(word, counts.get(word) + 1);
-		}
-		scan.close();
-	}
-	
+		
 	private void fillQueue() throws FileNotFoundException {
 		Comparator<Word> wordComparator = Comparator.comparing(Word::getCount);
 		wordComparator.thenComparing(Word::getLength);
@@ -81,4 +51,7 @@ public class FileParser {
 			}
 		}
 	}
+	
+	protected abstract void getCounts() throws FileNotFoundException;
+
 }

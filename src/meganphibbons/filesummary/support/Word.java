@@ -1,4 +1,4 @@
-package meganphibbons.filesummary;
+package meganphibbons.filesummary.support;
 /**
  * 
  * @author Megan Phibbons

@@ -1,4 +1,4 @@
-package meganphibbons.filesummary;
+package meganphibbons.filesummary.gui;
 /**
  * 
  * @author Megan Phibbons
@@ -28,6 +28,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import meganphibbons.filesummary.support.FileParser;
 
 public class FileChooserGUI implements ActionListener {
 	private JFrame frame;
@@ -206,7 +208,15 @@ public class FileChooserGUI implements ActionListener {
 						output = "Error: File not found";
 					}
 		    	} else if(dir.isSelected()) {
-		    		
+			    	FileParser summarizer = new FileParser(inputText.getText(), Integer.parseInt(numberInput.getText()));
+					try {
+				    	output = "The following keywords have been found:\n";
+						output += summarizer.getKeywords();
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						output = "Error: File not found";
+					}
 		    	} else {
 		    		output += "Please select a search type.";
 		    	}
