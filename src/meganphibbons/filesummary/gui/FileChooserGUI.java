@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -30,6 +31,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import meganphibbons.filesummary.support.FileParser;
+import meganphibbons.filesummary.support.LinkParser;
 import meganphibbons.filesummary.support.TextParser;
 
 public class FileChooserGUI implements ActionListener {
@@ -197,7 +199,14 @@ public class FileChooserGUI implements ActionListener {
 	    		output += "Please input a location or link.\n";
 	    	} else {
 		    	if(link.isSelected()) {
-		    		
+		    		LinkParser summarizer = new LinkParser(inputText.getText(), Integer.parseInt(numberInput.getText()));
+		    		output = "The following keywords have been found:\n";
+					try {
+						output += summarizer.getKeywords();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 		    	} else if(file.isSelected()) {
 			    	FileParser summarizer = new FileParser(inputText.getText(), Integer.parseInt(numberInput.getText()));
 					try {
@@ -207,6 +216,9 @@ public class FileChooserGUI implements ActionListener {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 						output = "Error: File not found";
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
 		    	} else if(text.isSelected()) {
 			    	TextParser summarizer = new TextParser(inputText.getText(), Integer.parseInt(numberInput.getText()));
@@ -217,6 +229,9 @@ public class FileChooserGUI implements ActionListener {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 						output = "Error: File not found";
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
 		    	} else {
 		    		output += "Please select a search type.";

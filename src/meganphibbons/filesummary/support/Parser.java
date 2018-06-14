@@ -2,6 +2,7 @@ package meganphibbons.filesummary.support;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -15,7 +16,7 @@ public abstract class Parser {
 	protected TreeMap<String, Integer> counts;
 	protected PriorityQueue<Word> words;
 	
-	public String getKeywords() throws FileNotFoundException {
+	public String getKeywords() throws IOException {
 		getCounts();
 		fillQueue();
 		while(words.size() > numKeywords) {
@@ -52,6 +53,6 @@ public abstract class Parser {
 		}
 	}
 	
-	protected abstract void getCounts() throws FileNotFoundException;
+	protected abstract void getCounts() throws FileNotFoundException, IOException;
 
 }
