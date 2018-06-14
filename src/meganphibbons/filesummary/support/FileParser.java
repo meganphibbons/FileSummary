@@ -1,9 +1,6 @@
 package meganphibbons.filesummary.support;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.PriorityQueue;
 import java.util.Scanner;
 import java.util.TreeMap;
 

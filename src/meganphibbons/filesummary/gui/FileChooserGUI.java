@@ -30,6 +30,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import meganphibbons.filesummary.support.FileParser;
+import meganphibbons.filesummary.support.TextParser;
 
 public class FileChooserGUI implements ActionListener {
 	private JFrame frame;
@@ -39,7 +40,7 @@ public class FileChooserGUI implements ActionListener {
 	private JTextArea summary;
 	private JRadioButton link;
 	private JRadioButton file;
-	JRadioButton dir;
+	private JRadioButton text;
 	
 	/**
 	 * Launch the application.
@@ -73,18 +74,18 @@ public class FileChooserGUI implements ActionListener {
 		JPanel selectionPanel = new JPanel();
 		link = new JRadioButton("Search from link");
 		file = new JRadioButton("Search from file");
-		dir = new JRadioButton("Search from directory");
+		text = new JRadioButton("Search from text");
 		searchType = new ButtonGroup();
 		searchType.add(link);
 		searchType.add(file);
-		searchType.add(dir);
+		searchType.add(text);
 		selectionPanel.add(link);
 		selectionPanel.add(file);
-		selectionPanel.add(dir);
+		selectionPanel.add(text);
 		
 		JPanel sPanel = new JPanel();
 		sPanel.setLayout(new BoxLayout(sPanel, BoxLayout.X_AXIS));
-		JLabel askForFile = new JLabel("Please input the file path or link");
+		JLabel askForFile = new JLabel("Please input the file path, link, or text");
 		sPanel.add(Box.createHorizontalGlue());
 		sPanel.add(askForFile);
 		sPanel.add(Box.createHorizontalGlue());
@@ -207,8 +208,8 @@ public class FileChooserGUI implements ActionListener {
 						e1.printStackTrace();
 						output = "Error: File not found";
 					}
-		    	} else if(dir.isSelected()) {
-			    	FileParser summarizer = new FileParser(inputText.getText(), Integer.parseInt(numberInput.getText()));
+		    	} else if(text.isSelected()) {
+			    	TextParser summarizer = new TextParser(inputText.getText(), Integer.parseInt(numberInput.getText()));
 					try {
 				    	output = "The following keywords have been found:\n";
 						output += summarizer.getKeywords();
